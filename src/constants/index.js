@@ -17,7 +17,7 @@ export const companyDetails = {
 export const heroContent = {
   tagline: "Moving Forward!!!",
   title: "Your trusted partner in logistics solutions.",
-  description: "CargoPanda Logistics is a tech-driven logistics company focused on innovation, efficiency, reliability, and sustainability. From Interacity to Intercity and cold chain solutions, CargoPanda keeps your cargo moving forward with real-time visibility and dedicated support.",
+  description: "CargoPanda Logistics is a tech-driven logistics company focused on innovation, efficiency, reliability, and sustainability. From Intracity to Intercity and cold chain solutions, CargoPanda keeps your cargo moving forward with real-time visibility and dedicated support.",
 };
 
 export const aboutContent = {

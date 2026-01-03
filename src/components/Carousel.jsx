@@ -34,15 +34,15 @@ function CarouselItem({ item, index, itemWidth, trackItemOffset, x, transition }
       transition={transition}
     >
       {/* Icon container - kept border-white/10 for a subtle glass effect, or remove if desired */}
-      <div className="mb-8 flex h-[80px] w-[80px] items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/10 shrink-0">
-        {React.cloneElement(item.icon, { className: "h-[40px] w-[40px] text-[#0D4715]" })}
+      <div className="mb-6 md:mb-8 flex h-[60px] w-[60px] md:h-[80px] md:w-[80px] items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/10 shrink-0\">
+        {React.cloneElement(item.icon, { className:"h-[32px] w-[32px] md:h-[40px] md:w-[40px] text-[#0D4715]" })}
       </div>
 
       <div className="flex flex-col items-center">
-        <h2 className="mb-4 font-black text-3xl md:text-4xl text-[#0D4715] leading-none tracking-tighter uppercase">
+        <h2 className="mb-3 md:mb-4 font-black text-xl sm:text-2xl md:text-3xl lg:text-4xl text-[#0D4715] leading-none tracking-tighter uppercase\">
           {item.title}
         </h2>
-        <p className="text-sm md:text-base text-[#41644A] leading-relaxed font-medium max-w-[300px]">
+        <p className="text-xs sm:text-sm md:text-base text-[#41644A] leading-relaxed font-medium max-w-[250px] md:max-w-[300px]\">
           {item.description}
         </p>
       </div>
