@@ -128,7 +128,7 @@ const QuoteModal = ({ open, onClose }) => {
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="flex gap-3">
-                  {[["First Name","firstName","Rahul"], ["Last Name","lastName","Sharma"]].map(([label, id, placeholder]) => (
+                  {[["First Name","firstName","First Name"], ["Last Name","lastName","Last Name"]].map(([label, id, placeholder]) => (
                     <div key={id} className="flex-1 min-w-0">
                       <label className="block text-xs font-bold uppercase tracking-widest text-[#a3b89a] mb-1.5">{label}</label>
                       <input
@@ -141,7 +141,7 @@ const QuoteModal = ({ open, onClose }) => {
                   ))}
                 </div>
 
-                {[["Email Address","email","email","rahul@example.com"], ["Phone Number","phone","tel","+91 98765 43210"]].map(([label, id, type, placeholder]) => (
+                {[["Email Address","email","email","email@example.com"], ["Phone Number","phone","tel","+91 0000000000"]].map(([label, id, type, placeholder]) => (
                   <div key={id}>
                     <label className="block text-xs font-bold uppercase tracking-widest text-[#a3b89a] mb-1.5">{label}</label>
                     <input
