@@ -1,35 +1,26 @@
-import {
-  BarChart3,
-  Car,
-  CheckCircle,
-  CheckCircle2,
-  Factory,
-  Joystick,
-  Leaf, Route,
-  ShieldCheck,
-  Truck,
-  X,
-  Zap
-} from "lucide-react";
-import { useEffect, useState } from "react";
-import { services } from "../constants";
-import { FlippingCard } from "./FlippingCard";
+import React, { useState, useEffect } from "react";
 import SectionWrapper from "./SectionWrapper";
 import SpotlightCard from "./SpotlightCard";
+import { FlippingCard } from "./FlippingCard";
+import { services } from "../constants";
+import {
+  CheckCircle2, Truck, Factory, ShieldCheck, Zap, BarChart3,
+  Leaf, Route, Joystick, Car, X, CheckCircle
+} from "lucide-react";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
 const whyPoints = [
-  { icon: Zap,        t: "Real Time Temperature Monitoring",       desc: "Live cold-chain visibility across every shipment." },
-  { icon: Leaf,       t: "Eco-Friendly Logistics",                 desc: "Greener routes, lower emissions, better planet." },
-  { icon: ShieldCheck,t: "Dedicated Support Teams",                desc: "24/7 experts at your side, always." },
-  { icon: Route,      t: "Route Optimization & Trip Planning",     desc: "AI-powered paths that save time and fuel." },
-  { icon: BarChart3,  t: "Scalable Model for Business Growth",     desc: "Grows with you from startup to enterprise." },
+  { icon: Zap,         t: "Real Time Temperature Monitoring",   desc: "Live cold-chain visibility across every shipment." },
+  { icon: Leaf,        t: "Eco-Friendly Logistics",             desc: "Greener routes, lower emissions, better planet." },
+  { icon: ShieldCheck, t: "Dedicated Support Teams",            desc: "24/7 experts at your side, always." },
+  { icon: Route,       t: "Route Optimization & Trip Planning", desc: "AI-powered paths that save time and fuel." },
+  { icon: BarChart3,   t: "Scalable Model for Business Growth", desc: "Grows with you from startup to enterprise." },
 ];
 
 const driverPoints = [
-  { icon: Joystick, t: "Join Us",          desc: "Grow your earnings by providing full-time transport solutions with a trusted partner." },
-  { icon: Car,      t: "Why Drive With Us",desc: "Excellent opportunities. Transparent on-time payments. Better earnings. Hassle-free operations." },
+  { icon: Joystick, t: "Join Us",           desc: "Grow your earnings by providing full-time transport solutions with a trusted partner." },
+  { icon: Car,      t: "Why Drive With Us", desc: "Excellent opportunities. Transparent on-time payments. Better earnings. Hassle-free operations." },
 ];
 
 // ── Sub-components ────────────────────────────────────────────────────────────
@@ -54,13 +45,13 @@ const ServiceContent = ({ service }) => (
   </div>
 );
 
-const FeatureCard = ({ icon: Icon, t, desc, center }) => (
-  <div className={`group flex gap-4 items-start p-5 rounded-2xl transition-all duration-300 hover:bg-white/5 border border-transparent hover:border-white/10${center ? " col-span-2 max-w-sm mx-auto w-full" : ""}`}>
+const FeatureCard = ({ icon: Icon, t, desc }) => (
+  <div className="group flex gap-4 items-start p-5 rounded-2xl transition-all duration-300 hover:bg-white/5 border border-transparent hover:border-white/10">
     <div className="shrink-0 w-12 h-12 rounded-xl bg-[#41644A]/50 flex items-center justify-center text-[#E9762B] group-hover:bg-[#E9762B]/20 transition-colors duration-300">
       <Icon size={22} strokeWidth={1.8} />
     </div>
-    <div>
-      <h4 className="text-sm md:text-base font-black uppercase tracking-wide text-white mb-1">{t}</h4>
+    <div className="min-w-0">
+      <h4 className="text-sm md:text-base font-black uppercase tracking-wide text-white mb-1 leading-tight">{t}</h4>
       <p className="text-[#a3b89a] text-xs md:text-sm leading-relaxed">{desc}</p>
     </div>
   </div>
@@ -96,39 +87,33 @@ const Modal = ({ open, onClose }) => {
 
   if (!open) return null;
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-
-  try {
-    const res = await fetch("https://formspree.io/f/xaqvekob", {  // ← paste your Form ID
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({
-        firstName: form.firstName,
-        lastName:  form.lastName,
-        email:     form.email,
-        phone:     form.phone,
-        message:   form.message,
-      }),
-    });
-
-    if (res.ok) {
-      setSubmitted(true);
-    } else {
-      throw new Error("Form submission failed");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {  // ← Driver Partnership Form ID
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          firstName: form.firstName,
+          lastName:  form.lastName,
+          email:     form.email,
+          phone:     form.phone,
+          message:   form.message,
+        }),
+      });
+      if (res.ok) setSubmitted(true);
+      else throw new Error();
+    } catch {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error("Formspree error:", err);
-    alert("Something went wrong. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const Field = ({ label, id, type = "text", placeholder, half }) => (
     <div className={half ? "flex-1 min-w-0" : "w-full"}>
-      <label className="block text-xs font-bold uppercase tracking-widest text-[#a3b89a] mb-1.5" htmlFor={id}>{label}</label>
+      <label className="block text-xs font-bold uppercase tracking-widest text-[#a3b89a] mb-1.5">{label}</label>
       <input
         id={id} type={type} placeholder={placeholder}
         value={form[id]}
@@ -148,8 +133,6 @@ const handleSubmit = async (e) => {
         style={{ animation: "modalIn 0.28s cubic-bezier(.22,1,.36,1) both" }}
       >
         <style>{`@keyframes modalIn { from { opacity:0; transform:scale(.95) translateY(12px) } to { opacity:1; transform:scale(1) translateY(0) } }`}</style>
-
-        {/* Top accent bar */}
         <div className="h-1 w-full bg-gradient-to-r from-[#E9762B] via-[#f0a060] to-[#E9762B]" />
 
         <div className="p-6 md:p-8">
@@ -175,21 +158,20 @@ const handleSubmit = async (e) => {
           ) : (
             <>
               <div className="mb-6">
+                <p className="text-[#E9762B] text-xs font-bold uppercase tracking-widest mb-1">Driver Partnership</p>
                 <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">Join CargoPanda</h3>
               </div>
-
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="flex gap-3">
-                  <Field label="First Name" id="firstName" placeholder="First Name"  half />
-                  <Field label="Last Name"  id="lastName"  placeholder="Last Name" half />
+                  <Field label="First Name" id="firstName" placeholder="Rahul"  half />
+                  <Field label="Last Name"  id="lastName"  placeholder="Sharma" half />
                 </div>
-                <Field label="Email Address" id="email" type="email" placeholder="email@example.com" />
-                <Field label="Phone Number"  id="phone" type="tel"   placeholder="+91 0000000000" />
+                <Field label="Email Address" id="email" type="email" placeholder="rahul@example.com" />
+                <Field label="Phone Number"  id="phone" type="tel"   placeholder="+91 98765 43210" />
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-widest text-[#a3b89a] mb-1.5">Message</label>
                   <textarea
-                    placeholder="Tell us about your Vehicle and experi
-                    ences."
+                    placeholder="Tell us about your vehicle and experience..."
                     value={form.message}
                     onChange={e => setForm(p => ({ ...p, message: e.target.value }))}
                     rows={3}
@@ -197,8 +179,7 @@ const handleSubmit = async (e) => {
                   />
                 </div>
                 <button
-                  type="submit"
-                  disabled={loading}
+                  type="submit" disabled={loading}
                   className="mt-1 w-full py-3.5 bg-[#E9762B] hover:bg-[#d4661f] text-white font-black uppercase tracking-widest rounded-xl transition-all duration-200 text-sm disabled:opacity-60"
                 >
                   {loading ? "Submitting…" : "Submit Application"}
@@ -269,29 +250,27 @@ const Services = () => {
         <div className="relative z-10">
 
           {/* ── Why Choose CargoPanda ── */}
-          <div className="text-center mb-10 md:mb-12">
+          <div className="text-center mb-8 md:mb-12">
             <span className="inline-block text-[#E9762B] text-xs font-bold uppercase tracking-[0.25em] mb-3">Our Advantages</span>
             <h3 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight uppercase">Why Choose CargoPanda?</h3>
           </div>
 
+          {/* Single column on mobile, 2 cols on sm+ */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {whyPoints.map((item, idx, arr) => (
-              <FeatureCard
-                key={idx}
-                {...item}
-                center={arr.length % 2 !== 0 && idx === arr.length - 1}
-              />
+            {whyPoints.map((item, idx) => (
+              <FeatureCard key={idx} {...item} />
             ))}
           </div>
 
           <Divider />
 
           {/* ── Driver Partnership ── */}
-          <div className="text-center mb-10 md:mb-12">
+          <div className="text-center mb-8 md:mb-12">
             <span className="inline-block text-[#E9762B] text-xs font-bold uppercase tracking-[0.25em] mb-3">Opportunities</span>
             <h3 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight uppercase">Driver Partnership</h3>
           </div>
 
+          {/* Single column on mobile, 2 cols on sm+ */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-12">
             {driverPoints.map((item, idx) => (
               <FeatureCard key={idx} {...item} />
@@ -304,7 +283,7 @@ const Services = () => {
               onClick={() => setModalOpen(true)}
               className="px-10 py-4 bg-[#E9762B] hover:bg-[#d4661f] text-white font-black uppercase tracking-widest rounded-2xl text-sm transition-all duration-200 shadow-lg hover:shadow-[0_0_32px_rgba(233,118,43,0.4)] hover:-translate-y-0.5"
             >
-              Join Us
+              Join Us as a Driver
             </button>
           </div>
 
