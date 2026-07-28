@@ -33,44 +33,28 @@ const SSR_ENTRY = join(SSR_DIR, "entry-server.js");
 const MIN_HTML_CHARS = 2000; // sanity floor — a real render is far larger
 
 /**
- * Neutralise framer-motion's `initial` state in the static snapshot.
+ * Sanity check on the snapshot.
  *
- * Sections wrapped in `whileInView` render with inline
- * `style="opacity:0;transform:translateY(50px)"`, because on the server there is
- * no viewport and the enter animation never runs. The text is still in the HTML,
- * but shipping the About / Services / Contact blocks at opacity:0 counts as
- * hidden content and causes a flash before hydration.
+ * Sections using framer-motion `whileInView` render here in their `initial`
+ * state — `style="opacity:0;transform:translateY(50px)"` — because there is no
+ * viewport on the server to trigger the enter animation.
  *
- * framer-motion's <MotionConfig isStatic> was supposed to prevent this and does
- * not in v12 — verified against real build output — so we strip it here instead.
- * Doing it as a post-process is also more robust: it does not depend on
- * framer-motion internals that may change between releases.
+ * That is fine and is left alone deliberately. An earlier version of this script
+ * rewrote those styles to make the content visible, which turned out to be both
+ * unnecessary and harmful:
  *
- * Deliberately narrow:
- *   · `opacity:0` becomes `opacity:1`, but `opacity:0.2` and friends are left
- *     alone (that one is the footer watermark, and is intentional).
- *   · inline `transform:` / `filter:` declarations are dropped — every one in
- *     this app's output is a motion initial. `will-change:transform` is a
- *     different property and survives untouched.
- *   · Tailwind classes such as `opacity-0` or `[transform:translateZ(60px)]` are
- *     class names, not style attributes, so they are never matched.
+ *   · Unnecessary — inline CSS does not remove text from the HTML. Crawlers that
+ *     do not execute JavaScript parse the markup, not the styles, so the copy was
+ *     always extractable. Google executes JS and sees the final animated state.
+ *   · Harmful — rewriting the DOM after React rendered it guaranteed a hydration
+ *     mismatch on every affected element, forcing React to discard and rebuild
+ *     the tree instead of hydrating it.
+ *
+ * Server and client markup must match exactly for hydrateRoot to work, so this
+ * only measures now. A sharp change in the count is worth investigating.
  */
-function neutraliseInitialStyles(html) {
-  let changed = 0;
-
-  const out = html.replace(/style="([^"]*)"/g, (full, css) => {
-    let v = css
-      .replace(/(^|;)(\s*)opacity\s*:\s*0(?![.\d])/gi, "$1$2opacity:1")
-      .replace(/(^|;)\s*(transform|filter)\s*:[^;]*/gi, "$1")
-      .replace(/;;+/g, ";")
-      .replace(/^;|;$/g, "")
-      .trim();
-
-    if (v !== css) changed += 1;
-    return v ? `style="${v}"` : "";
-  });
-
-  return { html: out, changed };
+function countHiddenInitialStates(html) {
+  return (html.match(/opacity:0(?![.\d])/g) || []).length;
 }
 
 async function exists(p) {
@@ -103,12 +87,10 @@ async function main() {
     process.exit(1);
   }
 
-  const { html: appHtml, changed } = neutraliseInitialStyles(rendered);
-
-  const stillHidden = (appHtml.match(/opacity:0(?![.\d])/g) || []).length;
-  if (stillHidden > 0) {
-    console.warn(`[prerender] warning: ${stillHidden} element(s) still render at opacity:0`);
-  }
+  // Injected verbatim — see countHiddenInitialStates() above for why the markup
+  // is deliberately not post-processed.
+  const appHtml = rendered;
+  const hiddenCount = countHiddenInitialStates(appHtml);
 
   const template = await readFile(join(DIST, "index.html"), "utf8");
   const marker = '<div id="root"></div>';
@@ -133,7 +115,7 @@ async function main() {
   console.log(
     `[prerender] injected ${appHtml.length.toLocaleString()} chars (~${words} words) ` +
       `into dist/index.html — total ${out.length.toLocaleString()} bytes, ` +
-      `${changed} hidden-state style attribute(s) neutralised`
+      `${hiddenCount} element(s) in animation start state`
   );
 }
 

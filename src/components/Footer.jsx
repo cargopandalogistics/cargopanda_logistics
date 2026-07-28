@@ -62,7 +62,12 @@ export default function Footer() {
 
         {/* Bottom Copyright */}
         <div className="mt-auto w-full text-center pb-2 z-40">
-          <p className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-4">©{new Date().getFullYear()} {companyDetails.legalName}. All rights reserved.</p>
+          {/* The year is baked in at build time by the prerender and re-evaluated
+              in the browser. Those disagree if a build from December is viewed in
+              January, which is a hydration mismatch — harmless, but React would
+              warn and patch. suppressHydrationWarning is the sanctioned way to
+              tell React this difference is expected. */}
+          <p suppressHydrationWarning className="text-[9px] md:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] px-4">©{new Date().getFullYear()} {companyDetails.legalName}. All rights reserved.</p>
         </div>
 
         <div className="absolute bottom-24 sm:bottom-28 md:bottom-36 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent w-full left-1/2 -translate-x-1/2 z-10"></div>

@@ -17,10 +17,6 @@ import { FlippingCard } from "./FlippingCard";
 import SectionWrapper from "./SectionWrapper";
 import SpotlightCard from "./SpotlightCard";
 
-// Viewport width, safe to call during server-side prerendering.
-// Falls back to a desktop width when there is no window (build-time render).
-const vw = () => (typeof window === "undefined" ? 1440 : window.innerWidth);
-
 // ── Data ──────────────────────────────────────────────────────────────────────
 
 const whyPoints = [
@@ -42,8 +38,8 @@ const ServiceContent = ({ service }) => (
   <div className="flex flex-col h-full p-6 sm:p-8 md:p-10 lg:p-12 text-center items-center justify-center">
     <div className={`w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-2xl md:rounded-3xl flex items-center justify-center text-white shadow-xl mb-6 md:mb-8 ${service.id === 'b2c' ? 'bg-[#E9762B]' : 'bg-[#41644A]'}`}>
       {service.id === "b2c"
-        ? <Truck size={vw() < 768 ? 28 : 40} />
-        : <Factory size={vw() < 768 ? 28 : 40} />}
+        ? <Truck className="w-7 h-7 md:w-10 md:h-10" />
+        : <Factory className="w-7 h-7 md:w-10 md:h-10" />}
     </div>
     <h3 className="text-xl sm:text-2xl md:text-3xl font-black mb-3 md:mb-4 text-[#0D4715] tracking-tighter uppercase leading-none">{service.title}</h3>
     <p className="text-[#41644A] mb-6 md:mb-8 text-sm md:text-base leading-relaxed font-semibold">{service.desc}</p>
@@ -231,7 +227,7 @@ const Services = () => {
             return (
               <FlippingCard
                 key={i}
-                height={vw() < 640 ? 400 : vw() < 1024 ? 450 : 550}
+                heightClass="h-[400px] sm:h-[450px] lg:h-[550px]"
                 frontContent={
                   <div className="relative h-full w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden group">
                     <img src={`/images/${service.id}.png`} alt={service.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
