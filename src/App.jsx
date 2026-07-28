@@ -1,34 +1,31 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import About from "./components/About";
-import Services from "./components/Services";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import NotFound from "./pages/NotFound";
 
 /**
- * The page tree, without a router.
+ * Route table, without a router.
  *
  * Kept separate from <App /> so the build-time prerender
- * (src/entry-server.jsx) can wrap the same tree in a StaticRouter.
- * Do not add a router in here.
+ * (src/entry-server.jsx) can wrap the same tree in a StaticRouter and render
+ * each path to its own HTML file. Do not add a router in here.
+ *
+ * Every path added below must also be listed in the `routes` export of
+ * src/entry-server.jsx, or it will not be prerendered — and, because there is
+ * no SPA rewrite on Vercel, it will 404 in production.
  */
 export const AppContent = () => (
-  <div className="bg-slate-50 antialiased overflow-x-hidden">
-    <Navbar />
-    <main>
-      <Hero />
-      <About />
-      <Services />
-      <Contact />
-    </main>
-    <Footer />
-  </div>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+    <Route path="/terms-of-service" element={<TermsOfService />} />
+    <Route path="*" element={<NotFound />} />
+  </Routes>
 );
 
 const App = () => (
-  // Anything using React Router hooks (such as Navbar) must be inside this tag
   <BrowserRouter>
     <AppContent />
   </BrowserRouter>

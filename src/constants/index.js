@@ -11,7 +11,12 @@ export const companyDetails = {
   legalName: "CargoPanda Logistics (OPC) Private Limited",
   cin: "U49299KA2025OPC193533",
   incDate: "14/08/2025",
-  shortName: "CargoPanda"
+  shortName: "CargoPanda",
+  // The survey-number form from the company registration record. This is the
+  // registered office and belongs only where that is the legally relevant fact
+  // (legal pages, invoices). It is NOT the public NAP — see contactConfig.address.
+  registeredOffice:
+    "17 Sy. No 43/4 J K Halli, R.M. Nagar, Krishnarajapuram, Bangalore North, Bangalore, Karnataka, India – 560036"
 };
 
 export const heroContent = {
@@ -59,5 +64,27 @@ export const contactConfig = {
   servicesEmail: "hemanth@cargopandalogistics.in",
   mediaEmail: "media@cargopanda.in",
   contactPerson: { name: "Hemanth A", designation: "Director" },
-  address: "17 Sy. No 43/4 J K Halli, R.M. Nagar, Krishnarajapuram, Bangalore North, Bangalore, Karnataka, India – 560036"
+
+  // CANONICAL PUBLIC ADDRESS — must match the Google Business Profile exactly,
+  // character for character. Google matches a website to a GBP listing by
+  // comparing name, address and phone; any difference weakens that association.
+  //
+  // This is the postal/navigable form that Google has geocoded, not the
+  // survey-number form from the registration record. For the registered office
+  // see companyDetails.registeredOffice.
+  //
+  // If you change this, you must also update:
+  //   · the LocalBusiness JSON-LD in index.html
+  //   · the Google Business Profile
+  //   · every directory listing (IndiaMART, Justdial, LinkedIn, ...)
+  address: "17 Nai Punya Layout, Anandapura Circle, Bengaluru, Karnataka 560036, India",
+
+  // Structured form of the same address, used to build the JSON-LD.
+  addressParts: {
+    street: "17 Nai Punya Layout, Anandapura Circle",
+    locality: "Bengaluru",
+    region: "Karnataka",
+    postalCode: "560036",
+    country: "IN"
+  }
 };
