@@ -1,8 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, X } from "lucide-react";
-import { useState } from "react";
 import { heroContent } from "../constants";
 import AnimatedButton from "./AnimatedButton";
 import InfiniteMarquee from "./InfiniteMarquee";
@@ -210,7 +210,7 @@ const Hero = () => {
               className="absolute -top-10 -left-10 w-32 md:w-64 h-16 md:h-32 bg-[#E9762B]/10 blur-[60px] rounded-full pointer-events-none"
             />
 
-            <div
+           <div
               aria-label={companyName}
               className="flex flex-wrap overflow-hidden mb-4 md:mb-6 relative z-10 justify-center lg:justify-start items-center"
             >
