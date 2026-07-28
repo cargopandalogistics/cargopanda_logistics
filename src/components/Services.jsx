@@ -1,12 +1,25 @@
-import React, { useState, useEffect } from "react";
+import {
+  BarChart3,
+  Car,
+  CheckCircle,
+  CheckCircle2,
+  Factory,
+  Joystick,
+  Leaf, Route,
+  ShieldCheck,
+  Truck,
+  X,
+  Zap
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { services } from "../constants";
+import { FlippingCard } from "./FlippingCard";
 import SectionWrapper from "./SectionWrapper";
 import SpotlightCard from "./SpotlightCard";
-import { FlippingCard } from "./FlippingCard";
-import { services } from "../constants";
-import {
-  CheckCircle2, Truck, Factory, ShieldCheck, Zap, BarChart3,
-  Leaf, Route, Joystick, Car, X, CheckCircle
-} from "lucide-react";
+
+// Viewport width, safe to call during server-side prerendering.
+// Falls back to a desktop width when there is no window (build-time render).
+const vw = () => (typeof window === "undefined" ? 1440 : window.innerWidth);
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -29,8 +42,8 @@ const ServiceContent = ({ service }) => (
   <div className="flex flex-col h-full p-6 sm:p-8 md:p-10 lg:p-12 text-center items-center justify-center">
     <div className={`w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-2xl md:rounded-3xl flex items-center justify-center text-white shadow-xl mb-6 md:mb-8 ${service.id === 'b2c' ? 'bg-[#E9762B]' : 'bg-[#41644A]'}`}>
       {service.id === "b2c"
-        ? <Truck size={window.innerWidth < 768 ? 28 : 40} />
-        : <Factory size={window.innerWidth < 768 ? 28 : 40} />}
+        ? <Truck size={vw() < 768 ? 28 : 40} />
+        : <Factory size={vw() < 768 ? 28 : 40} />}
     </div>
     <h3 className="text-xl sm:text-2xl md:text-3xl font-black mb-3 md:mb-4 text-[#0D4715] tracking-tighter uppercase leading-none">{service.title}</h3>
     <p className="text-[#41644A] mb-6 md:mb-8 text-sm md:text-base leading-relaxed font-semibold">{service.desc}</p>
@@ -163,11 +176,11 @@ const Modal = ({ open, onClose }) => {
               </div>
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="flex gap-3">
-                  <Field label="First Name" id="firstName" placeholder="Rahul"  half />
-                  <Field label="Last Name"  id="lastName"  placeholder="Sharma" half />
+                  <Field label="First Name" id="firstName" placeholder="First Name"  half />
+                  <Field label="Last Name"  id="lastName"  placeholder="Last Name" half />
                 </div>
-                <Field label="Email Address" id="email" type="email" placeholder="rahul@example.com" />
-                <Field label="Phone Number"  id="phone" type="tel"   placeholder="+91 98765 43210" />
+                <Field label="Email Address" id="email" type="email" placeholder="email@example.com" />
+                <Field label="Phone Number"  id="phone" type="tel"   placeholder="+91 0000000000" />
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-widest text-[#a3b89a] mb-1.5">Message</label>
                   <textarea
@@ -218,7 +231,7 @@ const Services = () => {
             return (
               <FlippingCard
                 key={i}
-                height={window.innerWidth < 640 ? 400 : window.innerWidth < 1024 ? 450 : 550}
+                height={vw() < 640 ? 400 : vw() < 1024 ? 450 : 550}
                 frontContent={
                   <div className="relative h-full w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden group">
                     <img src={`/images/${service.id}.png`} alt={service.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />

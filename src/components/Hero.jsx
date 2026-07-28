@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
+import { CheckCircle, X } from "lucide-react";
+import { useState } from "react";
 import { heroContent } from "../constants";
 import AnimatedButton from "./AnimatedButton";
 import InfiniteMarquee from "./InfiniteMarquee";
-import { X, CheckCircle } from "lucide-react";
 
 function FloatingPaths({ position }) {
   const paths = Array.from({ length: 36 }, (_, i) => ({
@@ -128,7 +128,7 @@ const QuoteModal = ({ open, onClose }) => {
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="flex gap-3">
-                  {[["First Name","firstName","Rahul"], ["Last Name","lastName","Sharma"]].map(([label, id, placeholder]) => (
+                  {[["First Name","firstName","First Name"], ["Last Name","lastName","Last Name"]].map(([label, id, placeholder]) => (
                     <div key={id} className="flex-1 min-w-0">
                       <label className="block text-xs font-bold uppercase tracking-widest text-[#a3b89a] mb-1.5">{label}</label>
                       <input
@@ -141,7 +141,7 @@ const QuoteModal = ({ open, onClose }) => {
                   ))}
                 </div>
 
-                {[["Email Address","email","email","rahul@example.com"], ["Phone Number","phone","tel","+91 98765 43210"]].map(([label, id, type, placeholder]) => (
+                {[["Email Address","email","email","email@example.com"], ["Phone Number","phone","tel","+91 0000000000"]].map(([label, id, type, placeholder]) => (
                   <div key={id}>
                     <label className="block text-xs font-bold uppercase tracking-widest text-[#a3b89a] mb-1.5">{label}</label>
                     <input
@@ -210,7 +210,10 @@ const Hero = () => {
               className="absolute -top-10 -left-10 w-32 md:w-64 h-16 md:h-32 bg-[#E9762B]/10 blur-[60px] rounded-full pointer-events-none"
             />
 
-            <div className="flex flex-wrap overflow-hidden mb-4 md:mb-6 relative z-10 justify-center lg:justify-start items-center">
+            <div
+              aria-label={companyName}
+              className="flex flex-wrap overflow-hidden mb-4 md:mb-6 relative z-10 justify-center lg:justify-start items-center"
+            >
               {companyName.split("").map((char, index) => (
                 <motion.span
                   key={index}
@@ -242,7 +245,7 @@ const Hero = () => {
             </span>
 
             <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-[#0D4715] leading-[1.1] tracking-tighter uppercase max-w-xl mx-auto lg:mx-0 text-center lg:text-left">
-              Your trusted partner in <span className="text-[#E9762B] italic">Logistics Solutions For F&B'S.</span>
+              Cold Chain &amp; Last-Mile Logistics <span className="text-[#E9762B] italic">for F&amp;B Brands</span>
             </h1>
           </motion.div>
         </div>

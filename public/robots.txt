@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# AI search and answer engines — allowed deliberately.
+# Much B2B logistics research now starts in an AI assistant.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.cargopandalogistics.in/sitemap.xml
