@@ -6,6 +6,11 @@ import { contactConfig } from "../constants";
 
 const fadeInUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } } };
 
+// A tel: URI must not contain spaces — several Android dialers and some iOS
+// versions silently refuse the link. Keep the display string formatted, strip
+// everything except digits and a leading + for the href.
+const telHref = (phone) => `+${String(phone).replace(/\D/g, "")}`;
+
 export default function Contact() {
   const socialLinks = [
     { icon: LinkedinIcon, href: 'https://www.linkedin.com/company/cargopanda-logistics07/', label: 'LinkedIn' },
@@ -45,7 +50,7 @@ export default function Contact() {
 
               <div className="h-2" />
 
-              <a href={`tel:${contactConfig.phone}`} className="font-extrabold text-xl sm:text-2xl md:text-xl text-[#0D4715] hover:text-[#E9762B] transition-colors tracking-tight mt-1">{contactConfig.phone}</a>
+              <a href={`tel:${telHref(contactConfig.phone)}`} className="font-extrabold text-xl sm:text-2xl md:text-xl text-[#0D4715] hover:text-[#E9762B] transition-colors tracking-tight mt-1">{contactConfig.phone}</a>
             </div>
           </Box>
         </div>
