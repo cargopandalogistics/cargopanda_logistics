@@ -32,9 +32,9 @@ export const routes = [
   {
     path: "/",
     out: "index.html",
-    title: "F&B Cold Chain & Last-Mile Logistics in Bangalore | CargoPanda",
+    title: "F&B Cold Chain & Mid-Mile Logistics in Bangalore | CargoPanda",
     description:
-      "Tech-driven cold chain and last-mile logistics for F&B brands in Bangalore. Real-time temperature monitoring, intracity and intercity reefer fleet.",
+      "Tech-driven cold chain and mid-mile logistics for F&B brands in Bangalore. Real-time temperature monitoring, intracity and intercity reefer fleet.",
   },
   {
     path: "/privacy-policy",

@@ -21,12 +21,12 @@ export const companyDetails = {
 
 export const heroContent = {
   tagline: "Moving Forward!!!",
-  title: "Cold Chain & Last-Mile Logistics for F&B Brands",
+  title: "Your trusted partner in logistics solutions For F&B.",
   description: "CargoPanda Logistics is a tech-driven logistics company focused on innovation, efficiency, reliability, and sustainability. From Intracity to Intercity and cold chain solutions, CargoPanda keeps your cargo moving forward with real-time visibility and dedicated support.",
 };
 
 export const aboutContent = {
-  brandStory: "CargoPanda began with a simple idea: logistics should be as smart and agile as the businesses it serves. Built by a team of technology and supply chain professionals, CargoPanda blends on-ground expertise with data-driven decision-making to solve complex logistics challenges. From supporting F&B brands with reliable first and last mile delivery to orchestrating Q-Commerce shipments and temperature sensitive perishables, CargoPanda has grown into a trusted partner across the F&B sector.",
+  brandStory: "CargoPanda began with a simple idea: logistics should be as smart and agile as the businesses it serves. Built by a team of technology and supply chain professionals, CargoPanda blends on-ground expertise with data-driven decision-making to solve complex logistics challenges. From supporting F&B brands with reliable first and mid mile delivery to orchestrating Q-Commerce shipments and temperature sensitive perishables, CargoPanda has grown into a trusted partner across the F&B sector.",
   purpose: "To deliver first to mid mile logistics services with a focus on innovation, efficiency & sustainability, creating value for our customers and partners.",
   vision: "To be the preferred logistics provider, connecting businesses across the country with speed, reliability, and efficiency.",
   values: [
@@ -42,7 +42,7 @@ export const services = [
   {
     id: "b2c",
     tag: "B2C Logistics",
-    title: "Fast & Reliable Last-Mile Delivery",
+    title: "Fast & Reliable Mid-Mile Delivery",
     desc: "Reliable delivery with real-time tracking, ensuring every shipment reaches your destination safely and on schedule.",
     points: ["Real-time shipment tracking", "Same-day and next-day delivery", "Seamless platform integration"]
   },

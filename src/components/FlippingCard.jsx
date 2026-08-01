@@ -32,15 +32,21 @@ export function FlippingCard({
         {/* Front Face */}
         <div className="absolute inset-0 h-full w-full rounded-[inherit] [transform-style:preserve-3d] [backface-visibility:hidden] [transform:rotateY(0deg)] overflow-hidden shadow-2xl">
           {/* This wrapper provides the 3D Depth */}
-          <div className="[transform:translateZ(60px)] md:[transform:translateZ(80px)] h-full w-full flex items-center justify-center\">
+          {/* NB: these className strings used to end with a stray backslash
+              (`justify-center\`), which Tailwind cannot match — so the class was
+              silently dropped and the content was never actually centred. */}
+          <div className="[transform:translateZ(60px)] md:[transform:translateZ(80px)] h-full w-full flex items-center justify-center">
             {frontContent}
           </div>
         </div>
 
         {/* Back Face */}
-        <div className="absolute inset-0 h-full w-full rounded-[inherit] bg-white border border-slate-100 [transform-style:preserve-3d] [backface-visibility:hidden] [transform:rotateY(180deg)] shadow-2xl">
+        {/* overflow-hidden mirrors the front face, which already had it. Its
+            absence here is why long back-face copy escaped the card outline on
+            mobile rather than being clipped by it. */}
+        <div className="absolute inset-0 h-full w-full rounded-[inherit] bg-white border border-slate-100 [transform-style:preserve-3d] [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden shadow-2xl">
           {/* translateZ(100px) makes the text "pop" out toward the user */}
-          <div className="[transform:translateZ(80px)] md:[transform:translateZ(100px)] h-full w-full flex items-center justify-center\">
+          <div className="[transform:translateZ(80px)] md:[transform:translateZ(100px)] h-full w-full flex items-center justify-center">
             {backContent}
           </div>
         </div>

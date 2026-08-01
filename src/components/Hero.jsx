@@ -245,7 +245,7 @@ const Hero = () => {
             </span>
 
             <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black text-[#0D4715] leading-[1.1] tracking-tighter uppercase max-w-xl mx-auto lg:mx-0 text-center lg:text-left">
-              Cold Chain &amp; Last-Mile Logistics <span className="text-[#E9762B] italic">for F&amp;B Brands</span>
+              Your trusted partner in <span className="text-[#E9762B] italic">Logistics Solutions For F&amp;B'S.</span>
             </h1>
           </motion.div>
         </div>

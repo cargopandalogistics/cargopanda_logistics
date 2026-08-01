@@ -42,11 +42,15 @@ const ServiceContent = ({ service }) => (
         : <Factory className="w-7 h-7 md:w-10 md:h-10" />}
     </div>
     <h3 className="text-xl sm:text-2xl md:text-3xl font-black mb-3 md:mb-4 text-[#0D4715] tracking-tighter uppercase leading-none">{service.title}</h3>
-    <p className="text-[#41644A] mb-6 md:mb-8 text-sm md:text-base leading-relaxed font-semibold">{service.desc}</p>
-    <ul className="space-y-3 md:space-y-4">
+    <p className="text-[#41644A] mb-4 md:mb-8 text-sm md:text-base leading-relaxed font-semibold">{service.desc}</p>
+    {/* The intercity card's bullets run to ~140 characters, roughly five times
+        the other card's. Uppercase + widest tracking made them wrap far enough
+        to spill outside the fixed-height card on mobile. Tighter tracking and
+        top-aligned icons keep multi-line bullets inside the card. */}
+    <ul className="space-y-2.5 md:space-y-4 text-left w-full">
       {service.points.map((p, idx) => (
-        <li key={idx} className="flex items-center gap-2 md:gap-3 text-xs md:text-sm font-black text-[#0D4715] uppercase tracking-widest">
-          <CheckCircle2 className="text-[#41644A] w-4 h-4 md:w-5 md:h-5 shrink-0" />
+        <li key={idx} className="flex items-start gap-2 md:gap-3 text-[11px] md:text-sm font-black text-[#0D4715] uppercase tracking-wide md:tracking-widest leading-snug">
+          <CheckCircle2 className="text-[#41644A] w-4 h-4 md:w-5 md:h-5 shrink-0 mt-px" />
           <span>{p}</span>
         </li>
       ))}
@@ -227,7 +231,7 @@ const Services = () => {
             return (
               <FlippingCard
                 key={i}
-                heightClass="h-[400px] sm:h-[450px] lg:h-[550px]"
+                heightClass="h-[520px] sm:h-[480px] lg:h-[550px]"
                 frontContent={
                   <div className="relative h-full w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden group">
                     <img src={`/images/${service.id}.png`} alt={service.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />

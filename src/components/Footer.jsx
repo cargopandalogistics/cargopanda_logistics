@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Twitter, Linkedin, Mail, ArrowRight } from "lucide-react";
+import { Twitter, Linkedin, Mail } from "lucide-react";
 import { contactConfig, companyDetails } from "../constants";
 
 export default function Footer() {
   const brandName = "CARGOPANDA LOGISTICS";
-  const navLinks = [ { label: "Home", href: "#home" }, { label: "About Us", href: "#about" }, { label: "Our Services", href: "#services" }, { label: "Contact", href: "#contact" } ];
   const socialLinks = [
     { icon: <Linkedin className="w-4 h-4 md:w-5 md:h-5" />, href: "#", label: "LinkedIn" },
     { icon: <Twitter className="w-4 h-4 md:w-5 md:h-5" />, href: "#", label: "Twitter" },
@@ -32,17 +31,8 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 text-[10px] md:text-[11px] font-black uppercase tracking-widest text-slate-300">
-            {navLinks.map((link, index) => (
-              <a key={index} className="hover:text-[#E9762B] duration-300 flex items-center gap-1 group transition-colors" href={link.href}>
-                {link.label}
-                <ArrowRight className="w-2.5 h-2.5 md:w-3 md:h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-              </a>
-            ))}
-          </div>
-
           {/* Legal pages are real routes, so these use <Link> rather than a hash anchor. */}
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-4 md:mt-5 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-slate-400">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-slate-400">
             <Link to="/privacy-policy" className="hover:text-[#E9762B] duration-300 transition-colors">
               Privacy Policy
             </Link>

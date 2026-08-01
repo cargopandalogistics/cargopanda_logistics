@@ -52,7 +52,7 @@ export default function TermsOfService() {
 
       <LegalSection id="services" heading="4. Service descriptions">
         <p>
-          The services described on this site &mdash; last-mile delivery, intracity and intercity
+          The services described on this site &mdash; mid-mile delivery, intracity and intercity
           transport, cold chain and reefer movement, dark store and central kitchen distribution
           &mdash; are described in general terms. Availability varies by route, city, vehicle type
           and season.
