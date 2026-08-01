@@ -32,7 +32,7 @@ export const routes = [
   {
     path: "/",
     out: "index.html",
-    title: "F&B Cold Chain & Mid-Mile Logistics in Bangalore | CargoPanda",
+    title: "Cold Chain Logistics for F&B Brands in Bangalore | CargoPanda",
     description:
       "Tech-driven cold chain and mid-mile logistics for F&B brands in Bangalore. Real-time temperature monitoring, intracity and intercity reefer fleet.",
   },
