@@ -30,6 +30,10 @@ body {
   transition: background .22s ease, color .18s ease;
 }
 
+/* NOTE: the reveal effect below is triggered by :hover and :focus-visible,
+   never plain :focus. A tap on a touchscreen sets :focus and leaves it set, so
+   using :focus here left buttons stuck half-filled after being tapped on mobile.
+   :focus-visible fires for keyboard navigation but not for touch. */
 /* Dark variant: sliding white reveal with green text (reverse of light) */
 .fancy-btn[data-variant="dark"] .hover-text {
   /* start hidden */
@@ -41,20 +45,20 @@ body {
 }
 
 .fancy-btn[data-variant="dark"]:hover,
-.fancy-btn[data-variant="dark"]:focus {
+.fancy-btn[data-variant="dark"]:focus-visible {
   /* keep base bg transparent so the white reveal block is visible */
   background: transparent !important;
   color: var(--animation-color) !important;
 }
 
 .fancy-btn[data-variant="dark"]:hover .actual-text,
-.fancy-btn[data-variant="dark"]:focus .actual-text {
+.fancy-btn[data-variant="dark"]:focus-visible .actual-text {
   opacity: 0;
   color: var(--animation-color) !important;
 }
 
 .fancy-btn[data-variant="dark"]:hover .hover-text,
-.fancy-btn[data-variant="dark"]:focus .hover-text {
+.fancy-btn[data-variant="dark"]:focus-visible .hover-text {
   width: 100% !important;
   opacity: 1 !important;
   filter: drop-shadow(0 6px 18px rgba(65,100,74,0.08));
@@ -101,14 +105,14 @@ body {
 
 /* On hover/focus/active: slightly shift base text and reveal filled block */
 .fancy-btn:hover .actual-text,
-.fancy-btn:focus .actual-text,
+.fancy-btn:focus-visible .actual-text,
 .fancy-btn:active .actual-text {
   opacity: 0.0;
   transform: translateY(-1px);
 }
 
 .fancy-btn:hover .hover-text,
-.fancy-btn:focus .hover-text,
+.fancy-btn:focus-visible .hover-text,
 .fancy-btn:active .hover-text {
   width: 100%;
   opacity: 1;

@@ -6,10 +6,10 @@
  *
  * StaticRouter stands in for BrowserRouter, which needs a real URL bar.
  *
- * Note on animations: sections using framer-motion `whileInView` render here in
- * their `initial` state (opacity:0), because there is no viewport on the server
- * to trigger the enter animation. That is left alone deliberately — see
- * scripts/prerender.mjs for why rewriting it broke hydration.
+ * Note on animations: `whileInView` must not be used in anything rendered here.
+ * It emits opacity:0 on the server, and if the IntersectionObserver never fires
+ * the content stays invisible for good. scripts/prerender.mjs fails the build if
+ * it finds any. `initial` + `animate` is fine — it always resolves on mount.
  */
 
 import React from "react";

@@ -136,6 +136,30 @@ async function main() {
     process.exit(1);
   }
 
+  // --- Guard against a regression that already shipped once ---
+  //
+  // A framer-motion `whileInView` wrapper renders its children at opacity:0 on
+  // the server, because there is no viewport to trigger the enter animation.
+  // While the site was client-rendered that was harmless. Once prerendered, any
+  // section whose IntersectionObserver failed to fire — during hydration, on
+  // fast scrolling, or when the `amount` threshold was never met — stayed
+  // invisible permanently. Entire sections rendered as blank white space.
+  //
+  // `initial` + `animate` is fine: that animation runs unconditionally on mount
+  // and always resolves. It is specifically observer-driven reveals that can
+  // strand content, so this checks for those rather than for opacity:0 in the
+  // output, which would also flag the safe hero animations.
+  const ssrBundle = await readFile(SSR_ENTRY, "utf8");
+  if (ssrBundle.includes("whileInView")) {
+    console.error(
+      "[prerender] refusing to build: a component still uses framer-motion `whileInView`.\n" +
+        "  Prerendered content must not depend on an IntersectionObserver to become\n" +
+        "  visible — if the observer does not fire, the section stays blank for good.\n" +
+        "  Search src/ for whileInView and render that content visible instead."
+    );
+    process.exit(1);
+  }
+
   // Read the template once, before we start overwriting dist/index.html.
   const template = await readFile(join(DIST, "index.html"), "utf8");
   const marker = '<div id="root"></div>';
@@ -190,7 +214,9 @@ async function main() {
     console.log(
       `  ${r.route.padEnd(20)} → ${r.file.padEnd(26)} ` +
         `~${String(r.words).padStart(4)} words, ${(r.bytes / 1024).toFixed(1)} kB` +
-        (r.hidden ? `, ${r.hidden} in animation start state` : "")
+        // These come from the hero's `initial`/`animate` pair, which always
+        // resolves on mount. Informational only — see the whileInView guard above.
+        (r.hidden ? `, ${r.hidden} hero element(s) animating in` : "")
     );
   }
 }

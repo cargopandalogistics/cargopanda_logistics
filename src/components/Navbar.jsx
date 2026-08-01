@@ -23,6 +23,48 @@ const Navbar = () => {
   const pillWidth = useSpring(180, { stiffness: 220, damping: 25, mass: 1 });
   const pillShift = useSpring(0, { stiffness: 220, damping: 25, mass: 1 });
 
+  // --- Hide while scrolling down, reveal on scroll up ---
+  //
+  // The nav is fixed and horizontally centred, and so are most section
+  // headings, so it used to sit on top of them while reading — covering the
+  // "Purpose" label, the "Driver Partnership" title, and several card headings.
+  // Getting out of the way on downward scroll fixes that without giving up the
+  // floating design or padding dead space into every section.
+  const [navHidden, setNavHidden] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const THRESHOLD = 8;   // ignore sub-pixel jitter and momentum bounce
+    const REVEAL_ABOVE = 120; // always visible near the top of the page
+    let ticking = false;
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+
+      window.requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const delta = y - lastScrollY.current;
+
+        if (y < REVEAL_ABOVE) {
+          setNavHidden(false);
+        } else if (Math.abs(delta) > THRESHOLD) {
+          setNavHidden(delta > 0);
+        }
+
+        lastScrollY.current = y;
+        ticking = false;
+      });
+    };
+
+    lastScrollY.current = window.scrollY;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // The mobile menu is a full-screen overlay; the bar must stay put while open.
+  const hideNav = navHidden && !mobileMenuOpen;
+
   // --- 1. Automatic Scroll Detection (Intersection Observer) ---
   useEffect(() => {
     const observerOptions = {
@@ -101,7 +143,11 @@ const Navbar = () => {
   return (
     <>
       {/* Desktop Navigation */}
-      <div className="hidden md:flex fixed top-8 left-1/2 -translate-x-1/2 z-[100] justify-center w-full">
+      <div
+        className={`hidden md:flex fixed top-8 left-1/2 -translate-x-1/2 z-[100] justify-center w-full
+          transition-[transform,opacity] duration-300 ease-out
+          ${hideNav ? '-translate-y-28 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
+      >
         <motion.nav
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
@@ -179,7 +225,11 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="md:hidden fixed top-4 left-0 right-0 z-[100] px-4">
+      <div
+        className={`md:hidden fixed top-4 left-0 right-0 z-[100] px-4
+          transition-[transform,opacity] duration-300 ease-out
+          ${hideNav ? '-translate-y-24 opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}
+      >
         <div className="flex items-center justify-between bg-white/95 backdrop-blur-md rounded-full px-4 py-3 shadow-lg">
           <div className="flex items-center gap-2">
             <img src="/images/2.png" alt="CargoPanda" className="w-7 h-7 object-contain" />
