@@ -102,9 +102,10 @@ const QuoteModal = ({ open, onClose }) => {
         <div className="p-6 md:p-8">
           <button
             onClick={handleClose}
+            aria-label="Close quote request form"
             className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors text-white"
           >
-            <X size={15} />
+            <X size={15} aria-hidden="true" />
           </button>
 
           {submitted ? (
@@ -231,10 +232,18 @@ const Hero = () => {
                   {char}
                 </motion.span>
               ))}
+              {/* Animates scaleX, not width.
+                  Width is a layout property: animating it forces the browser to
+                  recalculate layout every frame, which Lighthouse reports as
+                  "Avoid non-composited animations" and which was the source of a
+                  0.179 Cumulative Layout Shift on desktop — above the 0.1 pass
+                  threshold. scaleX runs on the compositor and shifts nothing.
+                  transformOrigin keeps it growing left-to-right as before. */}
               <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
                 transition={{ delay: 1.2, duration: 0.8 }}
+                style={{ transformOrigin: "left" }}
                 className="h-1 md:h-1.5 w-full bg-gradient-to-r from-[#0D4715] via-[#E9762B] to-transparent mt-1 rounded-full opacity-60"
               />
             </div>

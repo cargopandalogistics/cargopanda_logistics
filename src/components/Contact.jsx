@@ -56,9 +56,19 @@ export default function Contact() {
         <div className="flex flex-col items-center justify-center py-6 mb-8 md:mb-12 bg-[#41644A]/10 rounded-xl md:rounded-[2rem] border border-[#41644A]/20">
           <h3 className="text-base md:text-[20px] font-bold text-[#41644A] tracking-widest mb-4 md:mb-5">Find us online</h3>
           <div className="flex justify-center items-center gap-4 md:gap-6">
+            {/* These links contain only an icon, so they need an explicit
+                accessible name — Lighthouse reported "Links do not have a
+                discernible name". target/rel added because they leave the site. */}
             {socialLinks.map((link) => (
-              <a key={link.label} href={link.href} className="bg-white/80 hover:bg-[#41644A] hover:text-white text-[#41644A] p-2.5 md:p-3 rounded-full border border-[#41644A]/20 transition-all shadow-sm group">
-                <link.icon className="w-4 h-4 transition-transform group-hover:scale-110" />
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`CargoPanda Logistics on ${link.label}`}
+                className="bg-white/80 hover:bg-[#41644A] hover:text-white text-[#41644A] p-2.5 md:p-3 rounded-full border border-[#41644A]/20 transition-all shadow-sm group"
+              >
+                <link.icon aria-hidden="true" className="w-4 h-4 transition-transform group-hover:scale-110" />
               </a>
             ))}
           </div>
@@ -89,8 +99,14 @@ function CopyButton({ textToCopy }) {
   const [copied, setCopied] = useState(false);
   const handleCopy = async () => { await navigator.clipboard.writeText(textToCopy); setCopied(true); setTimeout(() => setCopied(false), 2000); };
   return (
-    <button onClick={handleCopy} className="p-1 hover:bg-slate-100 rounded-md transition-colors text-slate-300">
-      {copied ? <Check size={12} className="text-green-500" /> : <Copy size={12} />}
+    <button
+      onClick={handleCopy}
+      aria-label={copied ? "Email address copied" : "Copy email address"}
+      className="p-1 hover:bg-slate-100 rounded-md transition-colors text-slate-300"
+    >
+      {copied
+        ? <Check size={12} aria-hidden="true" className="text-green-500" />
+        : <Copy size={12} aria-hidden="true" />}
     </button>
   );
 }

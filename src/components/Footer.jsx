@@ -1,16 +1,13 @@
 "use client";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Twitter, Linkedin, Mail } from "lucide-react";
 import { contactConfig, companyDetails } from "../constants";
 
 export default function Footer() {
   const brandName = "CARGOPANDA LOGISTICS";
-  const socialLinks = [
-    { icon: <Linkedin className="w-4 h-4 md:w-5 md:h-5" />, href: "#", label: "LinkedIn" },
-    { icon: <Twitter className="w-4 h-4 md:w-5 md:h-5" />, href: "#", label: "Twitter" },
-    { icon: <Mail className="w-4 h-4 md:w-5 md:h-5" />, href: `mailto:${contactConfig.servicesEmail}`, label: "Email" },
-  ];
+  // A socialLinks array used to be declared here but was never rendered — and two
+  // of its three entries pointed at href="#". The real, working social links live
+  // in the Contact section. Removed rather than wired up, to avoid duplicating them.
 
   return (
     <section className="relative w-full mt-0 overflow-hidden bg-[#EBE1D1]">

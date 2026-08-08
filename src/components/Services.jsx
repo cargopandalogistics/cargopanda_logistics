@@ -151,9 +151,10 @@ const Modal = ({ open, onClose }) => {
         <div className="p-6 md:p-8">
           <button
             onClick={onClose}
+            aria-label="Close driver application form"
             className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors text-white"
           >
-            <X size={15} />
+            <X size={15} aria-hidden="true" />
           </button>
 
           {submitted ? (
