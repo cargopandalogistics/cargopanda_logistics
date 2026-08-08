@@ -234,7 +234,20 @@ const Services = () => {
                 heightClass="h-[520px] sm:h-[480px] lg:h-[550px]"
                 frontContent={
                   <div className="relative h-full w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden group">
-                    <img src={`/images/${service.id}.png`} alt={service.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+                    {/* WebP at 1400px. These were 2624px PNGs weighing 6.3 MB and
+                        5.4 MB — together the entire 12 MB page payload Lighthouse
+                        flagged, for images displayed at roughly 550px tall.
+                        Explicit width/height let the browser reserve space before
+                        the image loads, which keeps layout shift down. */}
+                    <img
+                      src={`/images/${service.id}.webp`}
+                      alt={service.title}
+                      width="1400"
+                      height="871"
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0D4715]/90 via-transparent to-transparent flex flex-col justify-end p-6 md:p-12">
                       <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white uppercase tracking-tighter leading-none">{service.title}</h3>
                       <p className="text-[#E9762B] font-black uppercase tracking-[0.2em] text-[9px] md:text-[10px] mt-3 md:mt-4 opacity-80">Hover to Discover</p>
